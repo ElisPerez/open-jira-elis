@@ -7,17 +7,26 @@ export const darkTheme = createTheme({
     background: {
       default: '#22272e',
     },
-    // primary: {
-    //   main: '#4a148c',
-    // },
+    primary: {
+      main: '#316DCA',
+    },
     secondary: {
-      main: '#19857b',
+      main: '#ec775c',
     },
     error: {
       main: red.A400,
     },
   },
   components: {
-    // MuiAvatar: ...
+    MuiAppBar: {
+      defaultProps: {
+        elevation: 0,
+      },
+      styleOverrides: {
+        root: {
+          backgroundColor: '#2D333B',
+        },
+      },
+    },
   },
 });
