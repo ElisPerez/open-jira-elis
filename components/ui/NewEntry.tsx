@@ -5,11 +5,11 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 import { EntriesContext } from '../../context/entries';
+import { UIContext } from '../../context/ui';
 
 export const NewEntry = () => {
   const { addNewEntry } = useContext(EntriesContext);
-
-  const [isAdding, setIsAdding] = useState(false);
+  const { isAddingEntry, setIsAddingEntry } = useContext(UIContext); // isAddingEntry: boolean;
 
   const [inputValue, setInputValue] = useState('');
 
@@ -20,13 +20,13 @@ export const NewEntry = () => {
   };
 
   const handleCancelButton = () => {
-    setIsAdding(false);
-    setInputValue('');
     setTouched(false);
+    setInputValue('');
+    setIsAddingEntry(false);
   };
 
   const onSave = () => {
-    if (inputValue.length <= 0) return;
+    if (inputValue.trim().length <= 0) return;
     // console.log({ inputValue });
 
     addNewEntry(inputValue);
@@ -34,14 +34,14 @@ export const NewEntry = () => {
   };
 
   return (
-    <Box sx={{ marginBottom: 2, paddingX: 2 }}>
-      {isAdding ? (
+    <Box sx={{ marginBottom: 2, paddingX: 1 }}>
+      {isAddingEntry ? (
         <>
           <TextField
             autoFocus
-            error={inputValue.length <= 0 && touched}
+            error={inputValue.trim().length <= 0 && touched}
             fullWidth
-            helperText={inputValue.length <= 0 && touched && 'Enter a value'}
+            helperText={inputValue.trim().length <= 0 && touched && 'Enter a value'}
             label='New Entry'
             multiline
             onChange={onTextFieldChanged}
@@ -51,7 +51,7 @@ export const NewEntry = () => {
             onBlur={() => setTouched(true)} // onBlur is when it loses the focus when leaving the input
           />
           <Box display='flex' justifyContent='space-between'>
-            <Button color='info' onClick={handleCancelButton} variant='contained'>
+            <Button color='info' onMouseDown={handleCancelButton} variant='contained'>
               Cancel
             </Button>
             <Button
@@ -66,9 +66,9 @@ export const NewEntry = () => {
         </>
       ) : (
         <Button
-          onClick={() => setIsAdding(true)}
-          startIcon={<AddCircleOutlineOutlinedIcon />}
           fullWidth
+          startIcon={<AddCircleOutlineOutlinedIcon />}
+          onClick={() => setIsAddingEntry(true)}
           variant='outlined'
         >
           Add ToDo
