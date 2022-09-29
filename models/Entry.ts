@@ -2,7 +2,7 @@ import mongoose, { Model, Schema } from 'mongoose';
 import { Entry } from '../interfaces';
 
 // The "I" in "IEntry" is to indicate that it is an interface
-interface IEntry extends Entry {}
+export interface IEntry extends Entry {}
 
 const entrySchema = new Schema(
   {
@@ -16,7 +16,7 @@ const entrySchema = new Schema(
       },
     },
   },
-  { collection: 'entries' } // Custom collection name 😎
+  { collection: 'entries' } // Custom collection name 😎 (README.md)
 );
 
 const EntryModel: Model<IEntry> = mongoose.models.Entry || mongoose.model('Entry', entrySchema);
