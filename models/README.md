@@ -33,3 +33,6 @@ export default NameModel;
 ```bash
 const nameSchema = new Schema({...}, { collection: 'myCustomCollectionName' });
 ```
+
+# Nota importante:
+Al hacer cambios en el modelo de mongoose hay que bajar y subir la app. Reiniciar el servidor es necesario para que los cambios surtan efecto.
