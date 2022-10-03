@@ -17,7 +17,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
       return updateEntry(req, res);
 
     case 'GET':
-      return res.status(500).json({ message: 'An Error here Elis' });
+      return getEntry(req, res);
 
     default:
       return res.status(400).json({ message: 'Method is not valid! Elis' });
@@ -25,21 +25,21 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 }
 
 const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  await db.connet();
-
-  const { id } = req.query;
-
-  const entryToUpdate = await EntryModel.findById(id);
-
-  if (!entryToUpdate) {
-    await db.disconnect();
-    return res.status(400).json({ message: `Entry with ID ${id} isn't exist` });
-  }
-
-  // Extract the description and status properties from the req.body and assign them to entryToUpdate:
-  const { description = entryToUpdate.description, status = entryToUpdate.status } = req.body;
-
   try {
+    await db.connet();
+
+    const { id } = req.query;
+
+    const entryToUpdate = await EntryModel.findById(id);
+
+    if (!entryToUpdate) {
+      await db.disconnect();
+      return res.status(400).json({ message: `Entry with ID ${id} not found` });
+    }
+
+    // Extract the description and status properties from the req.body and assign them to entryToUpdate:
+    const { description = entryToUpdate.description, status = entryToUpdate.status } = req.body;
+
     const updatedEntry = await EntryModel.findByIdAndUpdate(
       id,
       { description, status },
@@ -58,5 +58,24 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await db.disconnect();
     console.error('An error here Elis:', error);
     res.status(400).json({ message: error.errors.status.message });
+  }
+};
+
+const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  try {
+    await db.connet();
+    const { id } = req.query;
+
+    const entryFound = await EntryModel.findById(id);
+
+    if (!entryFound) {
+      return res.status(400).json({ message: `Entry with ID: ${id} not found` });
+    }
+
+    await db.disconnect();
+    res.status(200).json(entryFound);
+  } catch (error) {
+    await db.disconnect();
+    console.log({ error });
   }
 };
