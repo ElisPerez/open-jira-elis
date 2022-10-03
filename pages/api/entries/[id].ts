@@ -45,8 +45,12 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       { runValidators: true, new: true }
     );
 
+    await db.disconnect();
+
     res.status(200).json(updatedEntry!);
   } catch (error) {
+    await db.disconnect();
     console.error('An error here Elis:', error);
+    res.status(400).json({ message: 'status is invalid' });
   }
 };
