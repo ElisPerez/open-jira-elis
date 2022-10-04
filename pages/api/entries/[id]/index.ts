@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { db } from '../../../database';
-import { EntryModel, IEntry } from '../../../models';
+import { db } from '../../../../database';
+import { EntryModel, IEntry } from '../../../../models';
 
 type Data = { message: string } | IEntry;
 
@@ -51,13 +51,12 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     // entryToUpdate.status = status;
     // await entryToUpdate.save();
 
-    await db.disconnect();
 
     res.status(200).json(updatedEntry!);
   } catch (error: any) {
     await db.disconnect();
     console.error('An error here Elis:', error);
-    res.status(400).json({ message: error.errors.status.message });
+    res.status(400).json(error);
   }
 };
 
@@ -72,7 +71,6 @@ const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       return res.status(400).json({ message: `Entry with ID: ${id} not found` });
     }
 
-    await db.disconnect();
     res.status(200).json(entryFound);
   } catch (error) {
     await db.disconnect();
