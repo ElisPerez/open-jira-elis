@@ -51,6 +51,6 @@ const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     console.log('an error here Elis:', error);
 
-    return res.status(500).json({ message: 'Something went wrong, check the server console' });
+    return res.status(500).json({ message: 'Something went wrong, check the server console Elis' });
   }
 };
