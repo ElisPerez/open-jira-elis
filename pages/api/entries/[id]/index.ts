@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { db } from '../../../../database';
 import { EntryModel, IEntry } from '../../../../models';
@@ -6,11 +6,11 @@ import { EntryModel, IEntry } from '../../../../models';
 type Data = { message: string } | IEntry;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const { id } = req.query;
-
-  if (!mongoose.isValidObjectId(id)) {
-    return res.status(400).json({ message: `ID: ${id} is not valid!` });
-  }
+  // todo: Eliminar esta comprobacion ya que se usará la del middleware: Ready.
+  // const { id } = req.query;
+  // if (!mongoose.isValidObjectId(id)) {
+  //   return res.status(400).json({ message: `ID: ${id} is not valid!` });
+  // }
 
   switch (req.method) {
     case 'PUT':

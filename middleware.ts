@@ -1,12 +1,32 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// This function can be marked `async` if using `await` inside
 export function middleware(req: NextRequest) {
-  console.log('Passed through "/api/entries/:path/"');
-  console.log({ path: req.nextUrl.pathname });
+  if (req.nextUrl.pathname.startsWith('/api/entries/')) {
+    const id = req.nextUrl.pathname.replace('/api/entries/', '');
+    // console.log({ id });
+
+    const checkMongoIDRegExp = new RegExp('^[0-9a-fA-F]{24}$');
+
+    if (!checkMongoIDRegExp.test(id)) {
+      const url = req.nextUrl.clone();
+
+      url.pathname = '/api/bad-request';
+
+      url.search = `?message=${id} is not a valid MongoID`;
+
+      return NextResponse.rewrite(url);
+    }
+  }
+  // console.log('Got through "/api/entries/:path"');
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: '/api/entries/:path/',
+  matcher: [
+    // '/api/entries',
+    '/api/entries/:path/',
+  ],
 };

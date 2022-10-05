@@ -29,7 +29,7 @@ export const EntryList: React.FC<Props> = ({ status }) => {
 
   const onDropEntry = (e: DragEvent<HTMLDivElement>) => {
     // console.log(`🚀 eonDropEntry Event`, e);
-    const id = e.dataTransfer.getData('text'); // ?: text es la variable que está en el archivo EntryCard: e.dataTransfer.setData('text', entry._id);
+    const id = e.dataTransfer.getData('text'); // text es la variable que está en el archivo EntryCard: e.dataTransfer.setData('text', entry._id);
     // console.log(`🚀 id`, id);
 
     const entry = entries.find(e => e._id === id)!; // The sign of admiration (!) at the end is to confirm that it will always have a value (it will never be "Undefined")

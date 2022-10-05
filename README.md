@@ -1,5 +1,13 @@
 # OpenJiraElis - Next JS
 
+## Elis Antonio Perez
+
+Follow me [Instagram](https://instagram.com/elisperezmusic).
+
+## `Web developer`
+
+**Note: God is good!**
+
 ## Docker
 
 - To run locally you need the database.
@@ -10,7 +18,7 @@ Run:
 docker-compose up -d
 ```
 
-"-d": __detached__ Detached mode: Run containers in the background.
+"-d": **detached** Detached mode: Run containers in the background.
 
 Now you can use Docker Desktop to stop or start the database:
 
@@ -26,7 +34,8 @@ mongodb://localhost:27017/entriesdb
 ```
 
 ### Set the environment variables.
-Rename __.env.template__ to __.env__ and enter the corresponding values.
+
+Rename **.env.template** to **.env** and enter the corresponding values.
 
 ### Llenar la base de datos con información de prueba
 
@@ -36,11 +45,11 @@ En Postman llamar: `http://localhost:3000/api/seed`
 
 - `yarn upgrade-interactive --latest`
 
-## Elis Antonio Perez
+# Middleware
 
-Follow me [Instagram](https://instagram.com/elisperezmusic).
+## Configured matchers:
 
-## `Web developer`
-
-**Note: God is good!**
-
+- MUST start (and end) with '/'.
+- Can include named parameters: '/about/:path' matches '/about/a' and '/about/b' but not '/about/a/c'.
+- Can have modifiers on named parameters (starting with ':'): '/about/:path*' matches '/about/a/b/c' because '*' is zero or more. '?' is zero or one and '+' one or more.
+- Can use regular expression enclosed in parenthesis: '/about/(._ )' is the same as '/about/:path_'.
