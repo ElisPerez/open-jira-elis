@@ -61,10 +61,13 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
-    await db.connet();
     const { id } = req.query;
 
+    await db.connet();
+
     const entryFound = await EntryModel.findById(id);
+
+    await db.disconnect();
 
     if (!entryFound) {
       return res.status(400).json({ message: `Entry with ID: ${id} not found` });

@@ -32,6 +32,10 @@ Rename __.env.template__ to __.env__ and enter the corresponding values.
 
 En Postman llamar: `http://localhost:3000/api/seed`
 
+## Comando para actualizar el proyecto de Next JS a la ultima versión:
+
+- `yarn upgrade-interactive --latest`
+
 ## Elis Antonio Perez
 
 Follow me [Instagram](https://instagram.com/elisperezmusic).

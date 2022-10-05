@@ -17,11 +17,11 @@ export const connet = async () => {
     console.log('Connection already Elis');
     return;
   }
-  console.log('Elis MonConn:', mongoose.connections);
+  // console.log('Elis MonConn:', mongoose.connections);
 
   if (mongoose.connections.length > 0) {
     mongooConnection.isConnected = mongoose.connections[0].readyState;
-    console.log('Elis MonConn:', mongoose.connections);
+    // console.log('Elis MonConn:', mongoose.connections);
 
     if (mongooConnection.isConnected === 1) {
       console.log('using previous connection Elis');
