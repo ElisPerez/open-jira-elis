@@ -11,6 +11,7 @@ export const getEntryById = async (id: string): Promise<IEntry | null> => {
 
   await db.disconnect()
 
-  return entry;
+  // Solucion para serializar _id: ObjectID("633c7b7dce1efb60af2d384b") a _id: "633c7b7dce1efb60af2d384b":
+  return JSON.parse(JSON.stringify(entry));
 
 };
