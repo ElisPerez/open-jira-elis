@@ -20,11 +20,13 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import { Layout } from '../../components/layouts';
-import { EntryStatus } from '../../interfaces';
+import { Entry, EntryStatus } from '../../interfaces';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']; // El orden de array es el orden en que aparecerán.
 
-interface Props {}
+interface Props {
+  entry: Entry;
+}
 
 export const EntryPage: React.FC<Props> = props => {
   const [inputValue, setInputValue] = useState('');
@@ -93,6 +95,7 @@ export const EntryPage: React.FC<Props> = props => {
                 variant='contained'
                 fullWidth
                 onClick={onSave}
+                color='secondary'
               >
                 Save
               </Button>
@@ -111,12 +114,14 @@ export const EntryPage: React.FC<Props> = props => {
 // - Only if you need to pre-render a page whose data must be fetched at request time
 // "ctx": Context
 import { GetServerSideProps } from 'next';
-import { isValidObjectId } from 'mongoose';
+import { dbEntries } from '../../database';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params as { id: string };
 
-  if (!isValidObjectId(id)) {
+  const entry = await dbEntries.getEntryById(id);
+
+  if (!entry) {
     return {
       redirect: {
         destination: '/',
@@ -125,7 +130,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     };
   }
   return {
-    props: {},
+    props: {
+      entry
+    },
   };
 };
 
