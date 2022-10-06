@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useState } from 'react';
+import { ChangeEvent, useContext, useMemo, useState } from 'react';
 import {
   Button,
   capitalize,
@@ -28,8 +28,11 @@ interface Props {
   entry: Entry;
 }
 
-export const EntryPage: React.FC<Props> = ({entry}) => {
+export const EntryPage: React.FC<Props> = ({ entry }) => {
   // console.log({entry})
+
+  const { updateEntry } = useContext(EntriesContext);
+
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
@@ -52,15 +55,24 @@ export const EntryPage: React.FC<Props> = ({entry}) => {
   };
 
   const onSave = () => {
-    console.log({ inputValue, status });
+    // console.log({ inputValue, status });
+    if (inputValue.trim().length === 0) return;
+
+    const updatedEntry: Entry = {
+      ...entry,
+      status, // el del useState.
+      description: inputValue, // el del useState
+    };
+
+    updateEntry(updatedEntry, true);
   };
 
   return (
-    <Layout title={inputValue.substring(0,15) + '...'}>
+    <Layout title={inputValue.substring(0, 15) + '...'}>
       <Grid container justifyContent='center' sx={{ marginTop: 2 }}>
         <Grid item xs={12} sm={8} md={6}>
           <Card>
-            <CardHeader title={`Entry:`} subheader={`Created ${entry.createdAt} minutes ago`} />
+            <CardHeader title={`Entry:`} subheader={dateFunctions.getFormatDistanceToNow(entry.createdAt)} />
             <CardContent>
               <TextField
                 sx={{ marginTop: 2, marginBottom: 1 }}
@@ -116,6 +128,8 @@ export const EntryPage: React.FC<Props> = ({entry}) => {
 // "ctx": Context
 import { GetServerSideProps } from 'next';
 import { dbEntries } from '../../database';
+import { EntriesContext } from '../../context/entries';
+import { dateFunctions } from '../../utils';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params as { id: string };
@@ -132,7 +146,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
   return {
     props: {
-      entry
+      entry,
     },
   };
 };

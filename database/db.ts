@@ -8,22 +8,22 @@ import mongoose from 'mongoose';
  * 3 = disconnecting.
  */
 
-const mongooConnection = {
+const mongoConnection = {
   isConnected: 0,
 };
 
 export const connet = async () => {
-  if (mongooConnection.isConnected) {
+  if (mongoConnection.isConnected) {
     console.log('Connection already Elis');
     return;
   }
   // console.log('Elis MonConn:', mongoose.connections);
 
   if (mongoose.connections.length > 0) {
-    mongooConnection.isConnected = mongoose.connections[0].readyState;
+    mongoConnection.isConnected = mongoose.connections[0].readyState;
     // console.log('Elis MonConn:', mongoose.connections);
 
-    if (mongooConnection.isConnected === 1) {
+    if (mongoConnection.isConnected === 1) {
       console.log('using previous connection Elis');
       return;
     }
@@ -32,7 +32,7 @@ export const connet = async () => {
   }
 
   await mongoose.connect(process.env.MONGO_URI || '');
-  mongooConnection.isConnected = 1;
+  mongoConnection.isConnected = 1;
 
   console.log('conected to MongoDB Elis:', process.env.MONGO_URI);
 };
@@ -40,8 +40,11 @@ export const connet = async () => {
 export const disconnect = async () => {
   if (process.env.NODE_ENV === 'development') return;
 
-  if (mongooConnection.isConnected === 0) return;
+  if (mongoConnection.isConnected === 0) return;
 
   await mongoose.disconnect();
+
+  mongoConnection.isConnected = 0;
+
   console.log('Disconnect from MongoDB');
 };
