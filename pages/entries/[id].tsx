@@ -28,9 +28,10 @@ interface Props {
   entry: Entry;
 }
 
-export const EntryPage: React.FC<Props> = props => {
-  const [inputValue, setInputValue] = useState('');
-  const [status, setStatus] = useState<EntryStatus>('pending');
+export const EntryPage: React.FC<Props> = ({entry}) => {
+  // console.log({entry})
+  const [inputValue, setInputValue] = useState(entry.description);
+  const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
 
   const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
@@ -55,11 +56,11 @@ export const EntryPage: React.FC<Props> = props => {
   };
 
   return (
-    <Layout title='...'>
+    <Layout title={inputValue.substring(0,15) + '...'}>
       <Grid container justifyContent='center' sx={{ marginTop: 2 }}>
         <Grid item xs={12} sm={8} md={6}>
           <Card>
-            <CardHeader title={`Entry: ${inputValue}`} subheader={`Created -- minutes ago`} />
+            <CardHeader title={`Entry:`} subheader={`Created ${entry.createdAt} minutes ago`} />
             <CardContent>
               <TextField
                 sx={{ marginTop: 2, marginBottom: 1 }}
