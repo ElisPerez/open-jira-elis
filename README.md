@@ -53,3 +53,13 @@ En Postman llamar: `http://localhost:3000/api/seed`
 - Can include named parameters: '/about/:path' matches '/about/a' and '/about/b' but not '/about/a/c'.
 - Can have modifiers on named parameters (starting with ':'): '/about/:path*' matches '/about/a/b/c' because '*' is zero or more. '?' is zero or one and '+' one or more.
 - Can use regular expression enclosed in parenthesis: '/about/(._ )' is the same as '/about/:path_'.
+
+# MUITheme
+
+```bash
+// Para saber todas las propiedades del Theme MUI:
+//  Son las que están en el file info/properties-theme.json
+  import { useTheme } from '@mui/material';
+  const theme = useTheme();
+  console.log({theme});
+```

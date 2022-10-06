@@ -1,0 +1,10 @@
+{
+  "ctx": {
+    "query": { "id": "123" },
+    "resolvedUrl": "/entries/123",
+    "params": { "id": "123" },
+    "locales": "undefined",
+    "locale": "undefined",
+    "defaultLocale": "undefined"
+  }
+}
