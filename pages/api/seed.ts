@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(401).json({ message: 'PERMISSION DENIED (Elis)' });
   }
 
-  await db.connet();
+  await db.connect();
 
   // Interaction with the database
   await EntryModel.deleteMany();

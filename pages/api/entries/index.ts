@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 }
 
 const getEntries = async (res: NextApiResponse<Data>) => {
-  await db.connet();
+  await db.connect();
 
   // Interaction with the database
   const entries = await EntryModel.find().sort({ createdAt: 'ascending' }); // sort: to order the results according to the specified property.
@@ -38,7 +38,7 @@ const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   });
 
   try {
-    await db.connet();
+    await db.connect();
 
     // Interaction with the database
     await newEntry.save();

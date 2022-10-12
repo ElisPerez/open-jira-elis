@@ -25,7 +25,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 }
 
 const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  await db.connet();
+  await db.connect();
 
   const { id } = req.query;
 
@@ -63,7 +63,7 @@ const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
     const { id } = req.query;
 
-    await db.connet();
+    await db.connect();
 
     const entryFound = await EntryModel.findById(id);
 

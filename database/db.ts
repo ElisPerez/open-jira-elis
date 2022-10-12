@@ -12,7 +12,7 @@ const mongoConnection = {
   isConnected: 0,
 };
 
-export const connet = async () => {
+export const connect = async () => {
   if (mongoConnection.isConnected) {
     console.log('Connection already Elis');
     return;
